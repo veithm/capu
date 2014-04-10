@@ -1,0 +1,25 @@
+language: c++
+
+compiler:
+  - gcc
+  - clang
+
+script:
+  - cmake --version
+  - cd ../capu
+  - pwd
+  - mkdir build && cd build
+  - cmake -G "Unix Makefiles" -DCMAKE_TOOLCHAIN_FILE=../cmake/toolchain/Linux_X86_64.toolchain -DCMAKE_BUILD_TYPE:String=Release ../
+  - make -j4
+
+before_install:
+  - cd ..
+  - wget http://www.cmake.org/files/v2.8/cmake-2.8.10.tar.gz
+  - tar xf cmake-2.8.10.tar.gz
+  - cd cmake-2.8.10
+
+install:
+  - sudo apt-get install libcurl3-dev
+  - ./bootstrap --system-curl
+  - make -j4
+  - sudo make install
